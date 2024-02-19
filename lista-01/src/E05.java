@@ -10,6 +10,8 @@ public class E05 {
 
         assert p1.emEstoque();
         assert p2.emEstoque();
+
+        assert Produto.getCont() == 2;
     }
 }
 
@@ -20,7 +22,7 @@ class Produto {
     @SuppressWarnings("unused")
     private float preco;
     private int quant;
-    private int cont;
+    private static int cont = 0;
 
     Produto(String d, float p, int q) {
         id = (int) Math.random();
@@ -37,7 +39,7 @@ class Produto {
         return quant > 0;
     }
 
-    public int getCont() {
+    public static int getCont() {
         return cont;
     }
 
