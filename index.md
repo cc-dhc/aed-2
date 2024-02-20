@@ -2,7 +2,7 @@
 
 ## Listas
 
-{% for post in listas.posts %}
+{% for post in site.posts %}
 
 - [{{ post.title }}]({{ post.url }})
 
