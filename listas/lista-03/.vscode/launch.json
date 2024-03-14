@@ -1,0 +1,70 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Java",
+      "type": "java",
+      "request": "launch",
+      "stopOnEntry": true,
+      "jdkPath": "${env:JAVA_HOME}/bin",
+      "cwd": "${fileDirname}",
+      "startupClass": "${fileBasenameNoExtension}",
+      "classpath": [
+        ".",
+        "${fileDirname}"
+      ],
+      "vmArgs": "-ea"
+    },
+    {
+      "name": "Java Console App",
+      "type": "java",
+      "request": "launch",
+      "stopOnEntry": true,
+      "jdkPath": "${env:JAVA_HOME}/bin",
+      "cwd": "${fileDirname}",
+      "startupClass": "${fileBasenameNoExtension}",
+      "classpath": [
+        ".",
+        "${fileDirname}"
+      ],
+      "externalConsole": true
+    },
+    {
+      "type": "java",
+      "name": "Current File",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "E01",
+      "request": "launch",
+      "mainClass": "E01",
+      "projectName": "lista-03_50dfa4cc"
+    },
+    {
+      "type": "java",
+      "name": "E02",
+      "request": "launch",
+      "mainClass": "E02",
+      "projectName": "lista-03_50dfa4cc"
+    },
+    {
+      "type": "java",
+      "name": "E03",
+      "request": "launch",
+      "mainClass": "E03",
+      "projectName": "lista-03_50dfa4cc"
+    },
+    {
+      "type": "java",
+      "name": "E04",
+      "request": "launch",
+      "mainClass": "E04",
+      "projectName": "lista-03_50dfa4cc"
+    }
+  ]
+}
