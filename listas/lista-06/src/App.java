@@ -1,37 +1,13 @@
+import java.util.HashMap;
 import java.util.Random;
 
 public class App {
-  static boolean isDebugging = true;
   public static void main(String[] args) throws Exception {
-    int n = 100_000;
-
-    double[] randArray = randArray(100_000, -1_000_000, +1_000_000);
-    double[] desArray = desArray(100_000);
-    double[] ascArray = ascArray(100_000);
-
-    long startTime = System.nanoTime();
-
-    bubbleSort(randArray);
     
-    long endTime = System.nanoTime();
-
-    System.out.println(endTime - startTime);
   }
+}
 
-  public static long testBubbleSort(int n) {
-    double[] randArray = randArray(n, -1_000_000, +1_000_000);
-    double[] desArray = desArray(n);
-    double[] ascArray = ascArray(n);
-
-    long startTime = System.nanoTime();
-
-    bubbleSort(randArray);
-    
-    long endTime = System.nanoTime();
-
-    System.out.println(endTime - startTime);
-  }
-
+class Sort {
   public static void bubbleSort(double[] arr) {
     boolean isSwapped;
 
@@ -39,7 +15,6 @@ public class App {
       isSwapped = false;
       for (int i = 0; i < arr.length - 1; i++) {
         if (arr[i] < arr[i + 1]) {
-          //log(String.format("arr[%d] = %.4f > arr[%d] = %.4f", i, arr[i], i+1, arr[i+1]));
           swap(arr, i, i + 1);
           isSwapped = true;
         }
@@ -48,14 +23,68 @@ public class App {
   }
 
   public static void swap(double[] arr, int a, int b) {
-    //log(String.format("[SWAP]: (arr[ %d ] = %.4f ) <-> (arr[ %d ] = %.4f )", a, arr[a], b, arr[b]));
     double tmp = arr[a];
     arr[a] = arr[b];
     arr[b] = tmp;
   }
+}
 
-  public static void log(String msg) {
-    if (isDebugging) System.out.println(msg);
+class Test {
+  static HashMap<TestEntry, Long> results = new HashMap<>();
+
+  enum TestAlgo {
+    BUBBLE_SORT,
+
+  }
+
+  enum TestType {
+    ASCENDING,
+    RANDOM,
+    DESCENDING
+  }
+
+  enum TestSize {
+    T1,
+    T2,
+    T3
+  }
+
+  public static void ascTest() {
+    for (TestType testType : TestType.values()) {
+      for (TestAlgo testAlgo : TestAlgo.values()) {
+        for (TestSize testSize : TestSize.values()) {
+          TestEntry testEntry = null;
+
+          switch (testSize) {
+            case T1 -> testEntry = new TestEntry(testType, testAlgo, 10_000);
+            case T2 -> testEntry = new TestEntry(testType, testAlgo, 15_000);
+            case T3 -> testEntry = new TestEntry(testType, testAlgo, 30_000);
+          }
+
+          results.put(testEntry, test(testEntry.getN(), testAlgo, testType));
+        }
+      }
+    }
+  }
+
+  public static long test(int n, TestAlgo algo, TestType testType) {
+    double[] arr = null;
+
+    switch (testType) {
+      case ASCENDING -> arr = ascArray(n);
+      case DESCENDING -> arr = desArray(n);
+      case RANDOM -> arr = randArray(n, 1, 50_000);
+    }
+
+    long startTime = System.nanoTime();
+
+    switch (algo) {
+      case BUBBLE_SORT -> Sort.bubbleSort(arr);
+    }
+
+    long endTime = System.nanoTime();
+
+    return endTime - startTime;
   }
 
   public static double[] randArray(int n, double min, double max) {
@@ -97,14 +126,40 @@ public class App {
 
     return arr;
   }
-
-  public static void printArray(double[] arr) {
-    for (double d : arr) {
-      System.out.println(d);
-    }
-  }
 }
 
-enum Sort {
-  BUBBLE_SORT
+class TestEntry {
+  private Test.TestType testType;
+  private Test.TestAlgo testAlgo;
+  private int n;
+
+  public TestEntry(Test.TestType testType, Test.TestAlgo testAlgo, int n) {
+    this.testType = testType;
+    this.testAlgo = testAlgo;
+    this.n = n;
+  }
+
+  public Test.TestType getTestType() {
+    return testType;
+  }
+
+  public void setTestType(Test.TestType testType) {
+    this.testType = testType;
+  }
+
+  public Test.TestAlgo getTestAlgo() {
+    return testAlgo;
+  }
+
+  public void setTestAlgo(Test.TestAlgo testAlgo) {
+    this.testAlgo = testAlgo;
+  }
+
+  public int getN() {
+    return n;
+  }
+
+  public void setN(int n) {
+    this.n = n;
+  }
 }
