@@ -19,10 +19,53 @@ class Sort {
         }
       }
     } while (isSwapped);
+
+    if (!isSorted(arr)) throw new RuntimeException("arr not sorted");
   }
 
   public static void selectionSort(double[] arr) {
-    
+    int min;
+
+    for (int i = 0; i < arr.length-1; i++) {
+      min = i;
+      
+      for (int j = i+1; j < arr.length; j++) {
+        if (arr[j] < arr[min]) {
+          min = j;
+        }
+      }
+
+      if (min != i) swap(arr, min, i);
+    }
+
+    for (double d : arr) {
+      System.out.println(d);
+    }
+
+    if (!isSorted(arr)) throw new RuntimeException("arr not sorted");
+  }
+
+  public static void insertionSort(double[] arr) {
+    int j;
+    double key;
+
+    for (int i = 1; i < arr.length; i++) {
+      key = arr[i];
+      j = i - 1;
+      
+      while (j >= 0 && arr[j] > key) {
+        arr[j+1] = arr[j];
+        j--;
+      }
+
+      arr[j+1] = key;
+    }
+
+    if (!isSorted(arr)) throw new RuntimeException("arr not sorted");
+  }
+
+  public static void mergeSort() {
+
   }
 
   public static void swap(double[] arr, int a, int b) {
@@ -30,12 +73,21 @@ class Sort {
     arr[a] = arr[b];
     arr[b] = tmp;
   }
+
+  public static boolean isSorted(double[] arr) {
+    for (int i = 0; i < arr.length-1; i++) {
+      if (arr[i] < arr[i+1]) return false;
+    }
+
+    return true;
+  }
 }
 
 class Test {
   enum TestAlgo {
     BUBBLE_SORT,
-
+    SELECTION_SORT,
+    INSERTION_SORT
   }
 
   enum TestType {
@@ -88,6 +140,8 @@ class Test {
 
     switch (algo) {
       case BUBBLE_SORT -> Sort.bubbleSort(arr);
+      case INSERTION_SORT -> Sort.insertionSort(arr);
+      case SELECTION_SORT -> Sort.selectionSort(arr);
     }
 
     long endTime = System.nanoTime();
