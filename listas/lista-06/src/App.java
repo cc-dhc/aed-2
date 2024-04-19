@@ -1,9 +1,8 @@
-import java.util.HashMap;
 import java.util.Random;
 
 public class App {
   public static void main(String[] args) throws Exception {
-    
+    Test.run();
   }
 }
 
@@ -22,6 +21,10 @@ class Sort {
     } while (isSwapped);
   }
 
+  public static void selectionSort(double[] arr) {
+    
+  }
+
   public static void swap(double[] arr, int a, int b) {
     double tmp = arr[a];
     arr[a] = arr[b];
@@ -30,8 +33,6 @@ class Sort {
 }
 
 class Test {
-  static HashMap<TestEntry, Long> results = new HashMap<>();
-
   enum TestAlgo {
     BUBBLE_SORT,
 
@@ -44,24 +45,31 @@ class Test {
   }
 
   enum TestSize {
-    T1,
-    T2,
-    T3
+    N10_000,
+    N15_000,
+    N30_000
   }
 
-  public static void ascTest() {
+  public static void run() {
     for (TestType testType : TestType.values()) {
-      for (TestAlgo testAlgo : TestAlgo.values()) {
-        for (TestSize testSize : TestSize.values()) {
-          TestEntry testEntry = null;
+      System.out.printf("\n\t\t\tTabela %s\n\n", testType.toString());
 
-          switch (testSize) {
-            case T1 -> testEntry = new TestEntry(testType, testAlgo, 10_000);
-            case T2 -> testEntry = new TestEntry(testType, testAlgo, 15_000);
-            case T3 -> testEntry = new TestEntry(testType, testAlgo, 30_000);
-          }
+      for (TestSize testSize : TestSize.values()) {
+        int n;
 
-          results.put(testEntry, test(testEntry.getN(), testAlgo, testType));
+        switch (testSize) {
+          case N10_000 -> n = 10_000;
+          case N15_000 -> n = 15_000;
+          case N30_000 -> n = 30_000;
+          default -> n = 10_000;
+        }
+
+        System.out.printf("\nTamanho do Vetor: %d\n\n", n);
+
+        for (TestAlgo testAlgo : TestAlgo.values()) {
+          long result = test(n, testAlgo, testType);
+
+          System.out.printf("%s:\t\t%d\n", testAlgo.toString(), result);
         }
       }
     }
