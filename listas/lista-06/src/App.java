@@ -12,9 +12,9 @@ class Sort {
 
     do {
       isSwapped = false;
-      for (int i = 0; i < arr.length - 1; i++) {
-        if (arr[i] < arr[i + 1]) {
-          swap(arr, i, i + 1);
+      for (int i = arr.length - 1; i > 0; i--) {
+        if (arr[i] < arr[i - 1]) {
+          swap(arr, i, i - 1);
           isSwapped = true;
         }
       }
@@ -38,10 +38,6 @@ class Sort {
       if (min != i) swap(arr, min, i);
     }
 
-    for (double d : arr) {
-      System.out.println(d);
-    }
-
     if (!isSorted(arr)) throw new RuntimeException("arr not sorted");
   }
 
@@ -51,21 +47,76 @@ class Sort {
 
     for (int i = 1; i < arr.length; i++) {
       key = arr[i];
-      j = i - 1;
+      j = i;
       
-      while (j >= 0 && arr[j] > key) {
-        arr[j+1] = arr[j];
+      while (j > 0 && arr[j-1] > key) {
+        arr[j] = arr[j-1];
         j--;
       }
 
-      arr[j+1] = key;
+      arr[j] = key;
     }
 
     if (!isSorted(arr)) throw new RuntimeException("arr not sorted");
   }
 
-  public static void mergeSort() {
+  public static void mergeSort(double[] arr) {
+    double[] res = new double[arr.length];
 
+    mergeSort(arr, arr.length, res);
+
+    arr = res;
+  }
+
+  public static void mergeSort(double[] arr, int size, double[] res) {
+    if (arr == null) return;
+
+    if (arr.length > 1) {
+      half(arr, 0, arr.length / 2, res);
+      half(arr, arr.length / 2, arr.length, res);
+
+      mergeSort(arr, );
+      mergeSort(right);
+
+      merge(arr, left, right);
+    }
+  }
+
+  private static void half(double[] arr, int i, int j, double[] res) {
+    int size = j - i;
+
+    //double[] out = new double[size];
+
+    for (int k = 0; k < size; k++) {
+      res[k] = arr[k];
+    }
+    //return out;
+  }
+
+  private static void merge(double[] arr, int begin, int middle, int end, double[] res) {    int i = i;
+    int i = begin;
+    int j = middle;
+
+    for (int k = begin; k < end; k++) {
+      if (i < middle && (j >= end || arr[i] <= arr[j])) {
+        res[k] = arr[i];
+        i++;
+      } else {
+        res[k] = arr[j];
+        j++;
+      }
+    }
+
+
+    for (int i = 0; i < right.length; i++) {
+      if (i2 >= right.length || (i1 < left.length && left[i1] <= right[i2])) {
+        arr[i] = left[i1];
+        i1++;
+      } else {
+        arr[i] = right[i2];
+        i2++;
+      }
+    }
   }
 
   public static void swap(double[] arr, int a, int b) {
@@ -76,7 +127,7 @@ class Sort {
 
   public static boolean isSorted(double[] arr) {
     for (int i = 0; i < arr.length-1; i++) {
-      if (arr[i] < arr[i+1]) return false;
+      if (arr[i] > arr[i+1]) return false;
     }
 
     return true;
@@ -87,7 +138,8 @@ class Test {
   enum TestAlgo {
     BUBBLE_SORT,
     SELECTION_SORT,
-    INSERTION_SORT
+    INSERTION_SORT,
+    MERGE_SORT
   }
 
   enum TestType {
@@ -142,6 +194,13 @@ class Test {
       case BUBBLE_SORT -> Sort.bubbleSort(arr);
       case INSERTION_SORT -> Sort.insertionSort(arr);
       case SELECTION_SORT -> Sort.selectionSort(arr);
+      case MERGE_SORT -> {
+        Sort.mergeSort(arr);
+        for (double d : arr) {
+          System.out.println(d);
+        }
+        if (!Sort.isSorted(arr)) throw new RuntimeException("arr not sorted");
+      }
     }
 
     long endTime = System.nanoTime();
