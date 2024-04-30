@@ -1,21 +1,6 @@
-
-public class App {
-  public static void main(String[] args) throws Exception {
-    FilaSemCabeca fila = new FilaSemCabeca();
-
-    fila.enfileirar(10);
-    fila.enfileirar(12);
-    fila.enfileirar(13);
-    fila.enfileirar(14);
-
-    fila.mostrar();
-
-    fila.remover();
-    fila.mostrar();
-
-    System.out.println();
-    //fila.mostrar();
-    //System.out.println(fila.menor());
+public class Exercicios {
+  public static void main(String[] args) {
+    
   }
 }
 
@@ -142,17 +127,18 @@ class Fila {
   }
 
   public void inverter() {
-    if (head.getNextNode() == null)
-      return;
+    No current = head.getNextNode();
+    No prev = null;
+    No next = null;
 
-    No anterior = head;
-    anterior.setNextNode(null);
-    No proximo = head.getNextNode();
-
-    while (proximo.getNextNode() != null) {
-
+    while (current != null) {
+      next = current.getNextNode();
+      current.setNextNode(prev);
+      prev = current;
+      current = next;
     }
 
+    head.setNextNode(prev);
   }
 }
 
