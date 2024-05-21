@@ -1,6 +1,7 @@
 public class Exercicios {
   public static void main(String[] args) {
-    Pilha pilha = new PilhaSentinela();
+    Pilha pilha = new Pilha();
+    //PilhaSentinela pilha = new PilhaSentinela();
 
     pilha.inserir(5);
     pilha.inserir(6);
@@ -8,8 +9,7 @@ public class Exercicios {
     pilha.inserir(10);
 
     pilha.mostrar();
-    System.out.println(
-    );
+    System.out.println();
     System.out.println(pilha.remover());
     System.out.println();
     pilha.mostrar();
@@ -127,7 +127,7 @@ class Pilha {
   }
 }
 
-class PilhaSentinela extends Pilha {
+class PilhaSentinela {
   private Celula sentinela;
   private Celula topo;
 
@@ -139,11 +139,8 @@ class PilhaSentinela extends Pilha {
 
   public void inserir(int elemento) {
     Celula novo = new Celula(elemento);
-    if (vazio()) topo = novo;
-    else {
-      novo.setProx(topo);
-      topo = novo;
-    }
+    novo.setProx(topo);
+    topo = novo;
   }
 
   public int remover() {
